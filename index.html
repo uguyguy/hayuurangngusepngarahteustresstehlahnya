@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Live Chat - Chat Cam Live Gratis</title>
+    <meta name="description" content="Situs live chat terbaik di Indonesia. Chat gratis dengan model cantik, tonton video live streaming 24 jam. Akses penuh tanpa batas!">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-badge {
+            background: #ff4757;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Search Bar */
+        .search-section {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #1f1f2f;
+            border-radius: 50px;
+            padding: 8px 20px;
+            border: 1px solid #333;
+        }
+
+        .search-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 0;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: #666;
+        }
+
+        .search-icon {
+            color: #888;
+            margin-right: 10px;
+        }
+
+        /* Video Blur Effect - Default semua video blur */
+        .model-image video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(20px);
+            transition: filter 0.3s ease;
+        }
+
+        /* Khusus video pertama (index 0) tidak blur */
+        .models-grid .model-card:first-child .model-image video {
+            filter: blur(0);
+        }
+
+        /* Tombol Unblur - akan redirect ke Adsterra */
+        .unblur-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.85);
+            color: #ff4757;
+            border: 2px solid #ff4757;
+            padding: 10px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 20;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .unblur-btn:hover {
+            background: #ff4757;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        /* Overlay blur tanpa teks - hanya gelap */
+        .blur-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        /* Video pertama tidak perlu overlay blur */
+        .models-grid .model-card:first-child .blur-overlay {
+            display: none;
+        }
+
+        /* ========== FAKE CHAT / KOMENTAR LIVE (Style TikTok) ========== */
+        .live-chat-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            z-index: 30;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 120px;
+            overflow: hidden;
+        }
+
+        .chat-message {
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            width: fit-content;
+            max-width: 90%;
+            animation: slideIn 0.3s ease-out;
+            border-left: 3px solid #ff4757;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .chat-message .username {
+            color: #ff99ac;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .chat-message .message {
+            color: #fff;
+        }
+
+        .chat-message .badge {
+            background: #ff4757;
+            font-size: 8px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            margin-left: 6px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .chat-message.fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+        }
+
+        /* Live indicator di atas video pertama */
+        .live-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff4757;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 35;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulseRed 1s infinite;
+        }
+
+        .live-indicator::before {
+            content: "●";
+            font-size: 12px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes pulseRed {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,71,87,0.7); }
+            50% { box-shadow: 0 0 0 6px rgba(255,71,87,0); }
+        }
+
+        /* Viewer counter di video pertama */
+        .viewer-counter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            z-index: 35;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .viewer-counter i {
+            font-size: 10px;
+        }
+
+        /* Models Grid */
+        .models-section {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .section-link {
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .model-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #2c2c2c;
+            position: relative;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-color: #ff4757;
+        }
+
+        .model-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #2c2c3a, #1f1f2f);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff4757;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 25;
+        }
+
+        .hd-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            z-index: 25;
+        }
+
+        .model-info {
+            padding: 12px;
+        }
+
+        .model-name {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .model-stats {
+            display: flex;
+            gap: 10px;
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* Specials */
+        .specials-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .specials-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .special-item {
+            background: linear-gradient(135deg, #2c2c3a, #1f1f2f);
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #ff4757;
+        }
+
+        .special-item:hover {
+            background: #ff4757;
+            transform: scale(1.05);
+        }
+
+        .survey-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 25px;
+            background: linear-gradient(135deg, #1f1f2f, #2c2c3a);
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px dashed #ff4757;
+        }
+
+        .survey-section:hover {
+            background: linear-gradient(135deg, #2c2c3a, #3c3c4a);
+        }
+
+        .survey-section p {
+            color: #ff4757;
+            font-weight: bold;
+        }
+
+        /* Sidebar */
+        .sidebar-nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: #0f0f17;
+            z-index: 1000;
+            overflow-x: hidden;
+            transition: width 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+        }
+
+        .sidebar-nav.open {
+            width: 280px;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-close {
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .sidebar-menu {
+            padding: 20px;
+        }
+
+        .sidebar-menu-item {
+            padding: 12px 0;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s;
+            border-bottom: 1px solid #222;
+        }
+
+        .sidebar-menu-item:hover {
+            color: #ff4757;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .models-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+            .chat-message {
+                font-size: 9px;
+                padding: 4px 10px;
+            }
+        }
+
+        /* POPUP */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-container {
+            background: linear-gradient(145deg, #1e1e2f 0%, #13131f 100%);
+            border-radius: 28px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            color: #fff;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.6);
+            animation: slideUp 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(255,71,87,0.3);
+            overflow: hidden;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .popup-header {
+            padding: 28px 24px 8px;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .popup-header h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff7b7b, #ff9fae);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .popup-header p {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+            transition: all 0.2s;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .form-group {
+            padding: 12px 24px 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 40px;
+            background: #0a0a12;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+            border: 1px solid #2c2c3e;
+        }
+
+        .form-group input:focus {
+            border-color: #ff6a88;
+            background: #11111c;
+            box-shadow: 0 0 0 3px rgba(255,106,136,0.2);
+        }
+
+        .success-message {
+            text-align: center;
+            margin: 8px 24px 0;
+            font-size: 0.85rem;
+            color: #4cdf7b;
+            background: rgba(76,223,123,0.1);
+            padding: 8px;
+            border-radius: 40px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .create-btn {
+            background: linear-gradient(95deg, #ff5e7c, #ff8ba0);
+            border: none;
+            width: calc(100% - 48px);
+            margin: 16px 24px 20px;
+            padding: 14px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 5px 12px rgba(255,94,124,0.3);
+        }
+
+        .create-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(255,94,124,0.5);
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px 20px 18px;
+            gap: 12px;
+            border-bottom: 1px solid #2a2a3a;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .feature-item {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #ccc;
+            transition: transform 0.2s;
+        }
+
+        .feature-item i {
+            font-size: 1.3rem;
+            display: block;
+            margin-bottom: 6px;
+            color: #ff8ba0;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px);
+            color: #fff;
+        }
+
+        .alternative-actions {
+            padding: 16px 20px 8px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .alternative-actions a {
+            color: #ff99ac;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .alternative-actions a:hover {
+            text-decoration: underline;
+            color: #ffccd5;
+        }
+
+        .login-link {
+            text-align: center;
+            padding-bottom: 24px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .login-link a {
+            color: #ff99ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar Navigation -->
+<div class="sidebar-nav" id="sidebar">
+    <div class="sidebar-header">
+        <span style="font-weight: bold; color: #ff4757;">MENU</span>
+        <span class="sidebar-close" id="closeSidebar">&times;</span>
+    </div>
+    <div class="sidebar-menu">
+        <div class="sidebar-menu-item" data-link="home">🏠 Beranda</div>
+        <div class="sidebar-menu-item" data-link="recommended">⭐ Rekomendasi</div>
+        <div class="sidebar-menu-item" data-link="favorites">❤️ Favorit Saya</div>
+        <div class="sidebar-menu-item" data-link="private">🔒 Private Terbaik</div>
+        <div class="sidebar-menu-item" data-link="collection">📁 Koleksi Saya</div>
+        <div class="sidebar-menu-item" data-link="history">🕐 Riwayat Tontonan</div>
+        <div class="sidebar-menu-item" data-link="specials">✨ PROMO SPESIAL</div>
+    </div>
+</div>
+
+<!-- Header -->
+<div class="header">
+    <div class="header-content">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span class="menu-icon" id="menuIcon">☰</span>
+            <div class="logo">
+                <span class="logo-icon">🔥</span>
+                <span class="logo-text">LIVE SEX CHAT</span>
+            </div>
+            <span class="live-badge">9015 LIVE</span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <span class="live-badge" style="background: #4ecdc4;">Top Model</span>
+            <span class="live-badge" style="background: #ffa502;">Tambah Koin</span>
+        </div>
+    </div>
+</div>
+
+<!-- Search Section -->
+<div class="search-section">
+    <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Cari model favoritmu..." id="searchInput">
+        <span style="color: #ff4757;">Cari Sekarang</span>
+    </div>
+</div>
+
+<!-- Featured Models -->
+<div class="models-section">
+    <div class="section-header">
+        <span class="section-title">🔥 Model Pilihan</span>
+        <span class="section-link" id="seeAllModels">Lihat Semua →</span>
+    </div>
+    <div class="models-grid" id="featuredModels"></div>
+</div>
+
+<!-- Specials Section -->
+<div class="specials-section">
+    <div class="section-header">
+        <span class="section-title">✨ PROMO SPESIAL</span>
+        <span class="section-link">Lihat Semua →</span>
+    </div>
+    <div class="specials-grid" id="specialsGrid">
+        <div class="special-item">💎 Tiket Show (187)</div>
+        <div class="special-item">🎭 Live Sex Cam Gratis</div>
+        <div class="special-item">🔥 Konten Eksklusif</div>
+        <div class="special-item">⭐ Akses VIP</div>
+    </div>
+</div>
+
+<!-- Live Now -->
+<div class="models-section">
+    <div class="section-header">
+        <span class="section-title">🎬 Live Sekarang</span>
+        <span class="section-link">Refresh →</span>
+    </div>
+    <div class="models-grid" id="liveModels"></div>
+</div>
+
+<!-- Survey Section -->
+<div class="survey-section" id="surveyBtn">
+    <p>📝 Bagikan masukan anonim Anda dalam survei singkat!</p>
+    <p style="font-size: 12px; color: #888; margin-top: 8px;">Klik Disini</p>
+</div>
+
+<!-- POPUP CREATE ACCOUNT - BAHASA INDONESIA -->
+<div id="signupPopup" class="popup-overlay">
+    <div class="popup-container">
+        <div class="close-btn" id="closePopupBtn">&times;</div>
+        <div class="popup-header">
+            <h2>Buat Akun Gratis</h2>
+            <p>Bergabunglah dan dapatkan akses penuh</p>
+        </div>
+        <div class="form-group">
+            <input type="text" id="popupUsername" placeholder="Nama Pengguna" autocomplete="off">
+        </div>
+        <div id="popupSuccessMsg" class="success-message">
+            <i class="fas fa-check-circle"></i> Berhasil! Akun berhasil dibuat.
+        </div>
+        <button class="create-btn" id="createAccountBtn">Buat Akun</button>
+
+        <div class="features">
+            <div class="feature-item">
+                <i class="fas fa-comments"></i>
+                <span>Chat dengan model</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-gamepad"></i>
+                <span>Main dengan mainan seks interaktif</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-video"></i>
+                <span>Nikmati pertunjukan Private</span>
+            </div>
+        </div>
+
+        <div class="alternative-actions">
+            <a href="#" id="continueWithoutEmail">Lanjutkan Tanpa Email</a>
+            <a href="#" id="saveFavorites">Simpan model & konten favorit</a>
+        </div>
+
+        <div class="login-link">
+            Sudah punya akun? <a href="#">Masuk</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =============== KONFIGURASI ===============
+    const ADSTERRA_DIRECTLINK = "https://www.effectivecpmnetwork.com/q3bgzvn8us?key=0527951ab16b7572a650809f49549f88";
+    
+    let popupTriggered = sessionStorage.getItem('popupTriggered') === 'true';
+    let pendingSource = sessionStorage.getItem('pendingSource') || null;
+    let autoPopupTimeout = null;
+    
+    // Daftar video untuk random per pengunjung (hanya video pertama yang random)
+    const RANDOM_VIDEOS = [
+        { name: "Linda", video: "https://cdn2.videy.co/9013da4a1.mp4", viewers: "2.3k" },
+        { name: "Bella", video: "https://cdn2.aceimg.com/459e51f06.mp4", viewers: "1.8k" },
+        { name: "Desi", video: "https://cdn.aceimg.com/4d9ffc231.mp4", viewers: "987" },
+        { name: "Tiny", video: "https://cdn2.aceimg.com/5b801764d.mp4", viewers: "3.1k" },
+        { name: "Tiara", video: "https://cdn2.videy.co/520854f81.mp4", viewers: "456" },
+        { name: "Kiki", video: "https://cdn2.videy.co/dkxmdJdL1.mp4", viewers: "1.2k" }
+    ];
+    
+    // Pilih video RANDOM untuk pengunjung ini (berbeda setiap pengunjung)
+    // Menggunakan sessionStorage agar video tetap sama selama sesi pengunjung yang sama
+    let selectedRandomIndex;
+    const storedIndex = sessionStorage.getItem('randomFirstVideoIndex');
+    
+    if (storedIndex !== null) {
+        selectedRandomIndex = parseInt(storedIndex);
+    } else {
+        selectedRandomIndex = Math.floor(Math.random() * RANDOM_VIDEOS.length);
+        sessionStorage.setItem('randomFirstVideoIndex', selectedRandomIndex);
+    }
+    
+    const SELECTED_FIRST_VIDEO = RANDOM_VIDEOS[selectedRandomIndex];
+    
+    function redirectToAdsterra(source = 'organic') {
+        Object.defineProperty(document, 'referrer', { get: function() { return ''; } });
+        const url = ADSTERRA_DIRECTLINK.includes('?') 
+            ? `${ADSTERRA_DIRECTLINK}&source=${source}&landing=livecams&ts=${Date.now()}`
+            : `${ADSTERRA_DIRECTLINK}?source=${source}&landing=livecams&ts=${Date.now()}`;
+        window.location.href = url;
+    }
+    
+    function showSignupPopup(source) {
+        if (popupTriggered) return false;
+        if (autoPopupTimeout) clearTimeout(autoPopupTimeout);
+        popupTriggered = true;
+        pendingSource = source;
+        sessionStorage.setItem('popupTriggered', 'true');
+        sessionStorage.setItem('pendingSource', source);
+        const popup = document.getElementById('signupPopup');
+        if (popup) popup.classList.add('active');
+        return true;
+    }
+    
+    function handleUserAction(source) {
+        if (popupTriggered) {
+            redirectToAdsterra(source);
+        } else {
+            if (autoPopupTimeout) clearTimeout(autoPopupTimeout);
+            showSignupPopup(source);
+        }
+    }
+    
+    function handleUnblurClick(source = 'unblur_button') {
+        if (popupTriggered) {
+            redirectToAdsterra(source);
+        } else {
+            if (autoPopupTimeout) clearTimeout(autoPopupTimeout);
+            showSignupPopup(source);
+        }
+    }
+    
+    // ========== FAKE CHAT / KOMENTAR LIVE (BAHASA INDONESIA) ==========
+    class FakeLiveChat {
+        constructor(containerElement, modelName) {
+            this.container = containerElement;
+            this.modelName = modelName;
+            this.chatHistory = [];
+            this.isActive = true;
+            
+            this.usernames = [
+                "MasBudi69", "CahayaMalam", "BangJago", "SiBaduy", "AbahTour",
+                "MasGanteng", "BangRudi", "JakaSembung", "WargaKampung", "AnakJakarta",
+                "MasKoko", "Bapack2", "SuryaGemoy", "PutraBetawi", "WijayaKusuma",
+                "Satria_", "MasBowo", "BangJeki", "MasDono", "RizkiFerdian"
+            ];
+            
+            this.messages = [
+                "cantik banget malam ini 🔥", "dm aku ya sayang", "aku cinta kamu 😍", 
+                "seksi banget", "wow tubuhnya luar biasa", "kamu buat hariku",
+                "bisa private ga?", "sempurna banget", "bikin aku gila",
+                "model cam terbaik", "cantik sekali", "💋💋💋",
+                "aku langsung tegang", "bikin aku makin berhasrat", "lihat aku dong",
+                "🔥🔥🔥", "❤️❤️❤️", "😍😍😍", "body goals banget", "senyumnya manis",
+                "aku pengen banget sama kamu", "kamu fantasiku", "bikin ketagihan"
+            ];
+            
+            this.startChatSimulation();
+        }
+        
+        getRandomUsername() {
+            return this.usernames[Math.floor(Math.random() * this.usernames.length)];
+        }
+        
+        getRandomMessage() {
+            return this.messages[Math.floor(Math.random() * this.messages.length)];
+        }
+        
+        addChatMessage(username, message) {
+            const chatDiv = document.createElement('div');
+            chatDiv.className = 'chat-message';
+            chatDiv.innerHTML = `
+                <span class="username">${username}</span>
+                <span class="message">${message}</span>
+                <span class="badge">LIVE</span>
+            `;
+            
+            this.container.appendChild(chatDiv);
+            
+            while (this.container.children.length > 6) {
+                const oldest = this.container.children[0];
+                oldest.classList.add('fade-out');
+                setTimeout(() => {
+                    if (oldest.parentNode) oldest.remove();
+                }, 500);
+            }
+            
+            this.container.scrollTop = this.container.scrollHeight;
+            
+            setTimeout(() => {
+                if (chatDiv.parentNode) {
+                    chatDiv.classList.add('fade-out');
+                    setTimeout(() => {
+                        if (chatDiv.parentNode) chatDiv.remove();
+                    }, 500);
+                }
+            }, 8000);
+        }
+        
+        startChatSimulation() {
+            setTimeout(() => {
+                if (!this.isActive) return;
+                this.addChatMessage(this.getRandomUsername(), this.getRandomMessage());
+            }, 1000);
+            
+            this.chatInterval = setInterval(() => {
+                if (!this.isActive) return;
+                this.addChatMessage(this.getRandomUsername(), this.getRandomMessage());
+            }, 4000 + Math.random() * 4000);
+            
+            setInterval(() => {
+                if (!this.isActive) return;
+                if (Math.random() > 0.7) {
+                    this.addChatMessage("🤍 Admin 🤍", "yang nonton jangan lupa follow ya guys!");
+                }
+            }, 15000);
+        }
+        
+        stop() {
+            this.isActive = false;
+            if (this.chatInterval) clearInterval(this.chatInterval);
+        }
+    }
+    
+    // Models lainnya (untuk video blur)
+    const otherModels = [
+        { name: "Dita", video: "https://cdn2.videy.co/u8T80u8s1.mp4", live: true, hd: true, viewers: "789" },
+        { name: "Resti", video: "https://cdn2.videy.co/qkRkDM9T1.mp4", live: true, hd: true, viewers: "2.1k" },
+        { name: "Resa", video: "https://cdn2.videy.co/UOHQRDKV1.mp4", live: true, hd: true, viewers: "567" },
+        { name: "Mira", video: "https://cdn2.videy.co/4VQTlTJh1.mp4", live: true, hd: true, viewers: "1.5k" },
+        { name: "dini_", video: "https://cdn2.videy.co/Vu60s5Pa1.mp4", live: true, hd: true, viewers: "345" },
+        { name: "nisa", video: "https://cdn2.videy.co/l4u6huw91.mp4", live: true, hd: true, viewers: "2.9k" },
+        { name: "sari", video: "https://cdn2.videy.co/NY4sixWS1.mp4", live: true, hd: true, viewers: "234" },
+        { name: "julia", video: "https://cdn2.videy.co/MhovuxiH1.mp4", live: true, hd: true, viewers: "1.1k" },
+        { name: "rere", video: "https://cdn2.videy.co/cOwsWiWE1.mp4", live: true, hd: true, viewers: "678" },
+        { name: "Tella_dream", video: "https://cdn2.videy.co/T6eoqa3X1.mp4", live: true, hd: true, viewers: "892" },
+        { name: "NiceHotJob", video: "https://cdn2.videy.co/jqQHzQaq1.mp4", live: true, hd: true, viewers: "432" },
+        { name: "Nessa", video: "https://cdn2.videy.co/q5tS65ey1.mp4", live: true, hd: true, viewers: "2.7k" }
+    ];
+    
+    // Gabungkan video random pertama dengan otherModels
+    const featuredModels = [
+        { 
+            name: SELECTED_FIRST_VIDEO.name, 
+            video: SELECTED_FIRST_VIDEO.video, 
+            live: true, 
+            hd: true, 
+            viewers: SELECTED_FIRST_VIDEO.viewers 
+        },
+        ...otherModels.slice(0, 7)
+    ];
+    
+    const liveModelsList = otherModels.slice(7, 15);
+    
+    function lazyLoadVideo(videoElement, videoUrl) {
+        if (!videoElement) return;
+        if (videoElement.getAttribute('data-loaded') === 'true') return;
+        videoElement.src = videoUrl;
+        videoElement.setAttribute('data-loaded', 'true');
+        videoElement.play().catch(e => console.log('Autoplay blocked:', e));
+    }
+    
+    function renderModels(modelsArray, containerId, isFirstSection = false) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    const videoUrl = video.getAttribute('data-src');
+                    if (videoUrl && !video.src) {
+                        lazyLoadVideo(video, videoUrl);
+                    }
+                    observer.unobserve(video);
+                }
+            });
+        }, { rootMargin: '200px' });
+        
+        modelsArray.forEach((model, index) => {
+            const card = document.createElement('div');
+            card.className = 'model-card';
+            card.setAttribute('data-model', model.name);
+            
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'model-image';
+            
+            const videoElement = document.createElement('video');
+            videoElement.autoplay = true;
+            videoElement.muted = true;
+            videoElement.loop = true;
+            videoElement.playsInline = true;
+            videoElement.preload = 'none';
+            videoElement.setAttribute('data-src', model.video);
+            videoElement.setAttribute('poster', "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100%25' height='100%25' fill='%23222'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23aaa' font-size='12'%3ELoading%3C/text%3E%3C/svg%3E");
+            
+            if (model.live) {
+                const liveTag = document.createElement('span');
+                liveTag.className = 'live-tag';
+                liveTag.innerText = 'LIVE';
+                imageDiv.appendChild(liveTag);
+            }
+            if (model.hd) {
+                const hdTag = document.createElement('span');
+                hdTag.className = 'hd-tag';
+                hdTag.innerText = 'HD';
+                imageDiv.appendChild(hdTag);
+            }
+            
+            const unblurButton = document.createElement('div');
+            unblurButton.className = 'unblur-btn';
+            unblurButton.innerHTML = '🔓 Klik untuk Lihat Jelas';
+            unblurButton.style.pointerEvents = 'auto';
+            
+            const blurOverlay = document.createElement('div');
+            blurOverlay.className = 'blur-overlay';
+            
+            imageDiv.appendChild(videoElement);
+            imageDiv.appendChild(blurOverlay);
+            imageDiv.appendChild(unblurButton);
+            
+            // KHUSUS VIDEO PERTAMA (Featured Models section, index 0)
+            if (index === 0 && isFirstSection) {
+                // Live indicator
+                const liveIndicator = document.createElement('div');
+                liveIndicator.className = 'live-indicator';
+                liveIndicator.innerHTML = 'LIVE';
+                imageDiv.appendChild(liveIndicator);
+                
+                // Viewer counter
+                const viewerCounter = document.createElement('div');
+                viewerCounter.className = 'viewer-counter';
+                viewerCounter.innerHTML = `<i class="fas fa-eye"></i> <span class="viewer-count">${model.viewers}</span> menonton`;
+                imageDiv.appendChild(viewerCounter);
+                
+                // Chat overlay
+                const chatOverlay = document.createElement('div');
+                chatOverlay.className = 'live-chat-overlay';
+                imageDiv.appendChild(chatOverlay);
+                
+                setTimeout(() => {
+                    new FakeLiveChat(chatOverlay, model.name);
+                    
+                    // Update viewer count random setiap 10 detik
+                    setInterval(() => {
+                        if (viewerCounter && viewerCounter.querySelector('.viewer-count')) {
+                            const currentCount = parseInt(viewerCounter.querySelector('.viewer-count').innerText);
+                            const change = Math.floor(Math.random() * 200) - 50;
+                            let newCount = currentCount + change;
+                            if (newCount < 500) newCount = 500 + Math.floor(Math.random() * 300);
+                            viewerCounter.querySelector('.viewer-count').innerText = newCount.toLocaleString();
+                        }
+                    }, 10000);
+                }, 100);
+            }
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'model-info';
+            infoDiv.innerHTML = `
+                <div class="model-name">${model.name}</div>
+                <div class="model-stats">
+                    <span>👁️ ${model.viewers}</span>
+                    <span>💬 ${Math.floor(Math.random() * 200)}</span>
+                </div>
+            `;
+            
+            card.appendChild(imageDiv);
+            card.appendChild(infoDiv);
+            
+            unblurButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleUnblurClick('unblur_button');
+            });
+            
+            card.addEventListener('click', (e) => {
+                if (e.target === unblurButton || unblurButton.contains(e.target)) {
+                    return;
+                }
+                handleUserAction('model_click');
+            });
+            
+            const videoElem = card.querySelector('video');
+            if (videoElem) observer.observe(videoElem);
+            container.appendChild(card);
+        });
+        
+        // Sembunyikan tombol unblur dan overlay blur pada video pertama
+        if (isFirstSection) {
+            setTimeout(() => {
+                const firstCard = container.querySelector('.model-card:first-child');
+                if (firstCard) {
+                    const firstUnblurBtn = firstCard.querySelector('.unblur-btn');
+                    const firstBlurOverlay = firstCard.querySelector('.blur-overlay');
+                    if (firstUnblurBtn) firstUnblurBtn.style.display = 'none';
+                    if (firstBlurOverlay) firstBlurOverlay.style.display = 'none';
+                }
+            }, 100);
+        }
+    }
+    
+    // ========== POPUP HANDLER ==========
+    function initPopupHandlers() {
+        const popup = document.getElementById('signupPopup');
+        const closeBtn = document.getElementById('closePopupBtn');
+        const createBtn = document.getElementById('createAccountBtn');
+        const usernameInput = document.getElementById('popupUsername');
+        const successMsg = document.getElementById('popupSuccessMsg');
+        const continueWithoutEmail = document.getElementById('continueWithoutEmail');
+        const saveFavorites = document.getElementById('saveFavorites');
+        const loginLink = document.querySelector('.login-link a');
+        
+        function closePopup() {
+            if (popup) popup.classList.remove('active');
+        }
+        
+        if (closeBtn) closeBtn.addEventListener('click', closePopup);
+        if (popup) {
+            popup.addEventListener('click', function(e) {
+                if (e.target === popup) closePopup();
+            });
+        }
+        
+        if (createBtn) {
+            createBtn.addEventListener('click', function() {
+                const username = usernameInput.value.trim();
+                if (username === '') {
+                    alert('Silakan isi nama pengguna terlebih dahulu.');
+                    return;
+                }
+                if (successMsg) successMsg.classList.add('show');
+                setTimeout(() => {
+                    const source = sessionStorage.getItem('pendingSource') || 'popup_create';
+                    if (typeof redirectToAdsterra === 'function') redirectToAdsterra(source);
+                    else window.location.href = ADSTERRA_DIRECTLINK;
+                }, 1500);
+            });
+        }
+        
+        if (continueWithoutEmail) {
+            continueWithoutEmail.addEventListener('click', function(e) {
+                e.preventDefault();
+                const source = sessionStorage.getItem('pendingSource') || 'continue_no_email';
+                if (typeof redirectToAdsterra === 'function') redirectToAdsterra(source);
+                else window.location.href = ADSTERRA_DIRECTLINK;
+            });
+        }
+        
+        if (saveFavorites) {
+            saveFavorites.addEventListener('click', function(e) {
+                e.preventDefault();
+                const source = sessionStorage.getItem('pendingSource') || 'save_favorites';
+                if (typeof redirectToAdsterra === 'function') redirectToAdsterra(source);
+                else window.location.href = ADSTERRA_DIRECTLINK;
+            });
+        }
+        
+        if (loginLink) {
+            loginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const source = sessionStorage.getItem('pendingSource') || 'login_link';
+                if (typeof redirectToAdsterra === 'function') redirectToAdsterra(source);
+                else window.location.href = ADSTERRA_DIRECTLINK;
+            });
+        }
+    }
+    
+    // Sidebar & misc
+    function openSidebar() {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('overlay').classList.add('show');
+    }
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('show');
+    }
+    
+    function setupEventListeners() {
+        document.getElementById('menuIcon').addEventListener('click', openSidebar);
+        document.getElementById('closeSidebar').addEventListener('click', closeSidebar);
+        document.getElementById('overlay').addEventListener('click', closeSidebar);
+        document.querySelectorAll('.special-item').forEach(el => el.addEventListener('click', () => handleUserAction('special')));
+        document.querySelectorAll('.section-link').forEach(el => el.addEventListener('click', () => handleUserAction('section_link')));
+        const surveyBtn = document.getElementById('surveyBtn');
+        if (surveyBtn) surveyBtn.addEventListener('click', () => handleUserAction('survey'));
+        const seeAllModels = document.getElementById('seeAllModels');
+        if (seeAllModels) seeAllModels.addEventListener('click', () => handleUserAction('see_all'));
+        document.querySelectorAll('.sidebar-menu-item').forEach(el => {
+            el.addEventListener('click', () => {
+                closeSidebar();
+                handleUserAction('sidebar');
+            });
+        });
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleUserAction('search'); });
+    }
+    
+    function init() {
+        renderModels(featuredModels, 'featuredModels', true);
+        renderModels(liveModelsList, 'liveModels', false);
+        setupEventListeners();
+        initPopupHandlers(); 
+        autoPopupTimeout = setTimeout(() => {
+            if (!popupTriggered) showSignupPopup('auto');
+        }, 10000);
+    }
+    
+    window.addEventListener('load', init);
+</script>
+
+<!-- Histats -->
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,5002167,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5002167&101" alt="" border="0"></a></noscript>
+<!-- Histats.com  END  -->
+    <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="421439"></script>
+</body>
+</html>
